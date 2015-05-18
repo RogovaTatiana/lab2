@@ -1,15 +1,13 @@
 // lab2.cpp : Defines the entry point for the console application.
 //
 
-//#define _CRT_SECURE_NO_WARNINGS
-
 #include "stdafx.h"
 #include <iostream>
 #include <fstream>
 #include <iomanip>
 #include <stdio.h>
-
 #include <string>
+#include <cstdlib>
 #include <windows.h>
 using namespace std;
 
@@ -39,13 +37,12 @@ void main()
 		cout << "Название игрушки: ";
 		cin >> newToy->name;
 		OemToCharA(newToy->name, newToy->name); // преобразование, чтобы в файле тоже отображалась кирилица
-		cout << "Цена: ";
+		cout << "Цена (формат ввода 00,00): ";
 		cin >> newToy->price;
 		cout << "Количество: ";
 		cin >> newToy->quant;
-		cout << "Возраст: ";
+		cout << "Возраст (формат ввода 0-0): ";
 		scanf("%d%*c%d", &newToy->ageFrom, &newToy->ageTo);
-		//cin >> newToy->ageFrom >> "-" >> newToy->ageTo;
 		fout << newToy->name << "\t" << newToy->price << "\t" << newToy->quant << "\t" << newToy->ageFrom << "\t" << newToy->ageTo << "\n";
 	}
 	fout.close();
@@ -98,8 +95,45 @@ void main()
 		m++;
 	}
 	fin.close();
+	cout << "Игрушки, которые подходят детям от 1 до 3: \n";
+	for (int i = 0; i < m; i++)
+	{
+		if (newToys[i]->ageFrom <= 1 && newToys[i]->ageTo >= 3)
+			cout << newToys[i]->name << " \n";
+	}
 	system("pause");
+	cout << "Самая дорогая игрушка в ассортименте: \n";
+	double max = newToys[0]->price;
+	int index = 0;
+	for (int i = 1; i < m; i++)
+	{
+		if (newToys[i]->price > max)
+		{
+			max = newToys[i]->price;
+			index = i;
+		}
+	}
+	cout << newToys[index]->name << "\t" << newToys[index]->price << " \n";
+	system("pause");
+	
+	double price;
+	int ageFrom;
+	int ageTo;
 
+	cout << "Введите условия поиска: \n";
+	cout << "Цена до ";
+	cin >> price;
+	cout << "Возраст от ";
+	cin >> ageFrom;
+	cout << "Возраст до ";
+	cin >> ageTo;
+	
+	for (int i = 0; i < m; i++)
+	{
+		if (newToys[i]->ageFrom <= ageFrom && newToys[i]->ageTo >= ageTo && newToys[i]->price <= price)
+			cout << newToys[i]->name << " \n";
+	}
+	system("pause");
 
 	return;
 }

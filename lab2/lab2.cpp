@@ -37,7 +37,7 @@ void main()
 		cout << "Название игрушки: ";
 		cin >> newToy->name;
 		OemToCharA(newToy->name, newToy->name); // преобразование, чтобы в файле тоже отображалась кирилица
-		cout << "Цена (формат ввода 00,00): ";
+		cout << "Цена (формат ввода 00.00): ";
 		cin >> newToy->price;
 		cout << "Количество: ";
 		cin >> newToy->quant;
@@ -92,6 +92,8 @@ void main()
 			}
 			newToys[m] = new Toy();
 			strcpy(newToys[m]->name, word[0].c_str());
+			int point_pos = word[1].find(".");
+			word[1].replace(point_pos, 1, ",");
 			newToys[m]->price = atof(word[1].c_str());
 			newToys[m]->quant = atoi(word[2].c_str());
 			newToys[m]->ageFrom = atoi(word[3].c_str());
